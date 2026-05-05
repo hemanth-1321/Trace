@@ -1,6 +1,6 @@
-def main():
-    print("Hello from server!")
+from fastapi import FastAPI
+from api.upload import router as upload_router  # type: ignore      
 
+app = FastAPI()
 
-if __name__ == "__main__":
-    main()
+app.include_router(upload_router)
