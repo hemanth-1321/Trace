@@ -3,27 +3,25 @@ from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker, create_asyn
 from app.core.config import settings
 
 
+# Use SQLAlchemy 2 recommended create_async_engine signature; keep echo for debug.
 engine = create_async_engine(
     settings.DATABASE_URL,
-    pool_size=20,
-    max_overflow=30,
     echo=settings.DEBUG,
+    future=True,
 )
 
 AsyncSessionLocal = async_sessionmaker(
-    bind=engine,
+    engine,
     class_=AsyncSession,
     expire_on_commit=False,
     autoflush=False,
-    autocommit=False,
 )
 
-# Dependency to get DB session
+
 async def get_db():
+    """Dependency that yields an async DB session.
+
+    Session lifecycle (commit/rollback) should be managed by the caller.
+    """
     async with AsyncSessionLocal() as session:
-        try:
-            yield session
-            await session.commit()
-        except Exception:
-            await session.rollback()
-            raise
+        yield session

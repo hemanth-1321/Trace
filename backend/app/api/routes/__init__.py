@@ -1,1 +1,1 @@
-from app.api.routes import chat, memories, search, upload, vision
+from app.api.routes import auth, chat, memories, search, upload, vision

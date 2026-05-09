@@ -12,6 +12,9 @@ class Settings(BaseSettings):
     OPENROUTER_API_KEY: str
     OPENROUTER_BASE_URL: str = "https://openrouter.ai/api/v1"
 
+    CLERK_JWT_ISSUER: str
+    CLERK_JWT_AUDIENCE: str = "trace"
+
     VISION_MODEL: str = "google/gemini-2.0-flash-exp"
     EMBEDDING_MODEL: str = "openai/text-embedding-3-small"
 
